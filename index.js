@@ -58,15 +58,15 @@ class MinistryPlatform {
         }
     }
 
-    // ENDPOINTS
-    async userHasRole(featureName, contactId) {
+    // withSelectColumns, withFilter
+    async get(selectColumns, filter, table) {
         // TODO check if close to death
         await this.getTokenClientCredentials()
         try {
-            const response = await axios.get(`${process.env.MP_API_ENDPOINT}/ministryplatformapi/tables/dp_User_Roles`, {
+            const response = await axios.get(`${process.env.MP_API_ENDPOINT}/ministryplatformapi/tables/${table}`, {
                     params: { 
-                        '$select': `User_ID_Table_Contact_ID_Table.[Contact_ID], Role_ID_Table.[Role_Name], Role_ID_Table.[Role_ID], dp_User_Roles.[User_Role_ID]`,
-                        '$filter': `User_ID_Table_Contact_ID_Table.[Contact_ID] = ${contactId} and Role_ID_Table.[Role_Name] LIKE '${featureName}'` 
+                        '$select': selectColumns.join(","),
+                        '$filter': filter 
                     },
                     headers: {
                         Authorization: `Bearer ${this.clientToken}`,
