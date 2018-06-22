@@ -26,7 +26,6 @@ class MinistryPlatform {
         }
         try {
             const response = await axios.post(url, data, config)
-            console.log("user esponse", response.data);
             this.userToken = response.data.access_token
             return response.data.access_token
         } catch(e) {
@@ -34,7 +33,7 @@ class MinistryPlatform {
         }
     }
 
-    async getTokenClientCredentials() {
+    async loadTokenClientCredentials() {
         const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/oauth/connect/token`;
         const data = qs.stringify({
             'grant_type': 'client_credentials',
@@ -50,7 +49,6 @@ class MinistryPlatform {
         }
         try {
             const response = await axios.post(url, data, config)
-            console.log("client response", response.data);
             this.clientToken = response.data.access_token
             return response.data.access_token
         } catch(e) {
@@ -58,10 +56,9 @@ class MinistryPlatform {
         }
     }
 
-    // withSelectColumns, withFilter
     async get(selectColumns, filter, table) {
         // TODO check if close to death
-        await this.getTokenClientCredentials()
+        await this.loadTokenClientCredentials()
         try {
             const response = await axios.get(`${process.env.MP_API_ENDPOINT}/ministryplatformapi/tables/${table}`, {
                     params: { 
@@ -74,15 +71,15 @@ class MinistryPlatform {
                     }
                 }
             )
+            
             if (!response.data.length) {
                 if(response.data.Message && response.data.Message.indexOf("Signature validation failed") > -1) {
-                    console.error("bad token")
+                    console.error("invalid token")
                 }
-                return false;
+                return;
             }
-            return true;
+            return response.data;
         } catch(e) {
-            // console.error(e.response)
             if (e.response.data && e.response.data.Message.indexOf('token is expired')) {
                 console.error('token expired')
             } else {
@@ -92,7 +89,7 @@ class MinistryPlatform {
                     console.error(e.response)
                 }
             }
-            return false;
+            return;
         }
     }
 }
