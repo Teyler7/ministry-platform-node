@@ -8,12 +8,12 @@ MP_API_ENDPOINT=https://adminint.crossroads.net
 MP_CLIENT_ID=[api-client-id-here]
 MP_CLIENT_SECRET=[api-client-password-here]
 ```
-   
+
 #### Build a request
 ```js
 const MP = require('ministry-platform');
 const mp = new MP();
-
+ 
 const selectColumns = []
 selectColumns.push('User_ID_Table_Contact_ID_Table.[Contact_ID]')
 selectColumns.push('Role_ID_Table.[Role_Name]')
