@@ -12,7 +12,7 @@ class MinistryPlatform {
     }
 
     // AUTH
-    async loadTokenUser() {
+    async loadUserToken() {
         const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/oauth/connect/token`;
         const data = querystring.stringify({
             'username': process.env.MP_USERNAME,
@@ -22,6 +22,7 @@ class MinistryPlatform {
             'client_id': process.env.MP_CLIENT_ID,
             'client_secret': process.env.MP_CLIENT_SECRET,
         });
+        console.log({data});
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,11 +33,19 @@ class MinistryPlatform {
             this.userToken = response.data.access_token
             return response.data.access_token
         } catch(e) {
-            console.error(e.response.data.error, e.response.data.error_description)
+            if (e.response && e.response.data && e.response.data.Message && e.response.data.Message.indexOf('token is expired')) {
+                console.error('token expired')
+            } else {
+                if(e.response && e.response.status === 401) {
+                    console.error('Unauthorized')
+                } else {
+                    console.error(e.response)
+                }
+            }
         }
     }
 
-    async loadTokenClientCredentials() {
+    async loadClientToken() {
         const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/oauth/connect/token`;
         const data = querystring.stringify({
             'grant_type': 'client_credentials',
@@ -59,19 +68,21 @@ class MinistryPlatform {
     }
 
     async get() {
-        await this.loadTokenClientCredentials()
+        await this.loadClientToken()
+        const params = {}
+        const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/tables/${this.table}`;
+        if (this.selectColumns.length) {
+            params['$select'] = this.selectColumns.join(", ");
+        }
+        if (this.filter) {
+            params['$filter'] = this.filter;
+        }
+        const headers = {
+            Authorization: `Bearer ${this.clientToken}`,
+            Accept: 'application/json'
+        }
         try {
-            const response = await axios.get(`${process.env.MP_API_ENDPOINT}/ministryplatformapi/tables/${this.table}`, {
-                    params: { 
-                        '$select': this.selectColumns.join(", "),
-                        '$filter': this.filter 
-                    },
-                    headers: {
-                        Authorization: `Bearer ${this.clientToken}`,
-                        Accept: 'application/json'
-                    }
-                }
-            )
+            const response = await axios.get(url, { params, headers})
             
             if (!response.data.length) {
                 if(response.data.Message && response.data.Message.indexOf("Signature validation failed") > -1) {
