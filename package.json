@@ -7,15 +7,7 @@
     "test": "jest src",
     "test:watch": "jest src --watch"
   },
-  "jest": {
-    "globals": {
-      "MP_API_ENDPOINT": "https://adminint.crossroads.net",
-      "MP_CLIENT_ID": "test.client.id",
-      "MP_CLIENT_SECRET": "coolpassword123",
-      "MP_USERNAME": "mpuser",
-      "MP_PASSWORD": "mppassword"
-    }
-  },
+  "jest": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
