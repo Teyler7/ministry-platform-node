@@ -8,7 +8,7 @@ MP_API_ENDPOINT=https://adminint.crossroads.net
 MP_CLIENT_ID=[api-client-id-here]
 MP_CLIENT_SECRET=[api-client-password-here]
 ```
-
+   
 #### Build a request
 ```js
 const MP = require('ministry-platform');
