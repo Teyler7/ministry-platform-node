@@ -22,7 +22,6 @@ class MinistryPlatform {
             'client_id': process.env.MP_CLIENT_ID,
             'client_secret': process.env.MP_CLIENT_SECRET,
         });
-        console.log({data});
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -83,7 +82,6 @@ class MinistryPlatform {
         }
         try {
             const response = await axios.get(url, { params, headers})
-            
             if (!response.data.length) {
                 if(response.data.Message && response.data.Message.indexOf("Signature validation failed") > -1) {
                     console.error("invalid token")
@@ -92,13 +90,13 @@ class MinistryPlatform {
             }
             return response.data;
         } catch(e) {
-            if (e.response.data && e.response.data.Message && e.response.data.Message.indexOf('token is expired')) {
+            if (e.response && e.response.data && e.response.data.Message && e.response.data.Message.indexOf('token is expired')) {
                 console.error('token expired')
             } else {
-                if(e.response.status === 401) {
+                if(e.response && e.response.status === 401) {
                     console.error('Unauthorized')
                 } else {
-                    console.error(e.response.data)
+                    console.error(e.response)
                 }
             }
             return;
