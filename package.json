@@ -7,6 +7,10 @@
     "test": "jest src",
     "test:watch": "jest src --watch"
   },
+  "engines" : { 
+    "node" : ">=7.6"
+  },
+  "engineStrict" : true,
   "jest": {},
   "author": "",
   "license": "ISC",

@@ -1,6 +1,10 @@
 # Ministry Platform
 
 ## Usage
+
+#### Prerequisites
+
+This package uses async/await, so require a node version > 7.6
  
 #### Set Environment Variables
 ```
