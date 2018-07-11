@@ -13,7 +13,7 @@ class MinistryPlatform {
 
     // AUTH
     async loadUserToken() {
-        const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/oauth/connect/token`;
+        const url = `${MP_OAUTH_BASE_URL}/connect/token`;
         const data = querystring.stringify({
             'username': process.env.MP_USERNAME,
             'password': process.env.MP_PASSWORD,
@@ -45,7 +45,7 @@ class MinistryPlatform {
     }
 
     async loadClientToken() {
-        const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/oauth/connect/token`;
+        const url = `${MP_OAUTH_BASE_URL}/connect/token`;
         const data = querystring.stringify({
             'grant_type': 'client_credentials',
             'scope': 'http://www.thinkministry.com/dataplatform/scopes/all',
@@ -69,7 +69,7 @@ class MinistryPlatform {
     async get() {
         await this.loadClientToken()
         const params = {}
-        const url = `${process.env.MP_API_ENDPOINT}/ministryplatformapi/tables/${this.table}`;
+        const url = `${process.env.MP_REST_API_ENDPOINT}/tables/${this.table}`;
         if (this.selectColumns.length) {
             params['$select'] = this.selectColumns.join(", ");
         }

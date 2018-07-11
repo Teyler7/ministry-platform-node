@@ -2,7 +2,8 @@ const MP = require('./app')
 const nock = require('nock')
 let mp
 beforeAll(() => {
-  process.env.MP_API_ENDPOINT = "https://adminint.crossroads.net"
+  process.env.MP_REST_API_ENDPOINT = "https://adminint.crossroads.net/ministryplatformapi"
+  process.env.MP_OAUTH_BASE_URL = "https://adminint.crossroads.net/ministryplatformapi/oauth"
   process.env.MP_USERNAME = "mpuser"
   process.env.MP_PASSWORD = "password1$3"
   process.env.MP_CLIENT_ID = "client-id"

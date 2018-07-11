@@ -4,7 +4,8 @@
  
 #### Set Environment Variables
 ```
-MP_API_ENDPOINT=https://adminint.crossroads.net
+MP_REST_API_ENDPOINT=https://adminint.crossroads.net/ministryplatformapi
+MP_OAUTH_BASE_URL=https://adminint.crossroads.net/ministryplatformapi/oauth
 MP_CLIENT_ID=[api-client-id-here]
 MP_CLIENT_SECRET=[api-client-password-here]
 ```
@@ -43,3 +44,12 @@ npm test
 # or, to run tests as you change files
 npm test:watch
 ```
+
+#### Environment Variables needed
+
+* MP_REST_API_ENDPOINT = "https://adminint.crossroads.net/ministryplatformapi"
+* MP_OAUTH_BASE_URL = "https://adminint.crossroads.net/ministryplatformapi/oauth"
+* MP_USERNAME = "mpuser"
+* MP_PASSWORD = "password1$3"
+* MP_CLIENT_ID = "client-id"
+* MP_CLIENT_SECRET = "mysecret"
