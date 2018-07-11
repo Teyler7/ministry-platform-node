@@ -70,7 +70,7 @@ class MinistryPlatform {
         await this.loadClientToken()
         const params = {}
         const url = `${process.env.MP_REST_API_ENDPOINT}/tables/${this.table}`;
-        if (this.selectColumns.length) {
+        if (this.selectColumns && this.selectColumns.length) {
             params['$select'] = this.selectColumns.join(", ");
         }
         if (this.filter) {

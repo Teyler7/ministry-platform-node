@@ -1,4 +1,4 @@
-const MP = require('./index.js');
+const MP = require('./src/app.js');
 const mp = new MP();
 
 (async function test() {
@@ -12,5 +12,5 @@ const mp = new MP();
                          .withFilter(filter)
                          .fromTable(table)
                          .get()
-    console.log("data!", data);
+    console.info("data!", data);
 })()

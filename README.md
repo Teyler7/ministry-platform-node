@@ -1,20 +1,19 @@
 # Ministry Platform
 
+[![Teamcity Status](<https://ci.crossroads.net/app/rest/builds/buildType:(id:SharedCode_Release_MinistryPlatformNode)/statusIcon.svg>)](https://ci.crossroads.net/viewType.html?buildTypeId=SharedCode_Release_MinistryPlatformNode)
+
+an npm package for interacting with the Ministry Platform Rest API
+
 ## Usage
 
 #### Prerequisites
 
-This package uses async/await, so require a node version > 7.6
+This package uses async/await, so requires a node version > 7.6
  
-#### Set Environment Variables
-```
-MP_REST_API_ENDPOINT=https://adminint.crossroads.net/ministryplatformapi
-MP_OAUTH_BASE_URL=https://adminint.crossroads.net/ministryplatformapi/oauth
-MP_CLIENT_ID=[api-client-id-here]
-MP_CLIENT_SECRET=[api-client-password-here]
-```
-
 #### Build a request
+
+currently, only GET requests with select columns, filters, and table in implemented.
+
 ```js
 const MP = require('ministry-platform');
 const mp = new MP();
@@ -29,9 +28,9 @@ const data = await mp.withSelectColumns(selectColumns)
     .withFilter(filter)
     .fromTable(table)
     .get()
-console.log("data:", data);
+console.info("data:", data);
 ```
-> to run the above example, you can run `node example.js`, just remember to set your environment variables
+> to run the above example, you can run `node example.js`, just remember to set your environment variables.
 
 ## Development
 
