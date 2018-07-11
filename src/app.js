@@ -13,7 +13,7 @@ class MinistryPlatform {
 
     // AUTH
     async loadUserToken() {
-        const url = `${MP_OAUTH_BASE_URL}/connect/token`;
+        const url = `${process.env.MP_OAUTH_BASE_URL}/connect/token`;
         const data = querystring.stringify({
             'username': process.env.MP_USERNAME,
             'password': process.env.MP_PASSWORD,
@@ -45,7 +45,7 @@ class MinistryPlatform {
     }
 
     async loadClientToken() {
-        const url = `${MP_OAUTH_BASE_URL}/connect/token`;
+        const url = `${process.env.MP_OAUTH_BASE_URL}/connect/token`;
         const data = querystring.stringify({
             'grant_type': 'client_credentials',
             'scope': 'http://www.thinkministry.com/dataplatform/scopes/all',
